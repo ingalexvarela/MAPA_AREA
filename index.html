@@ -144,6 +144,52 @@
     display: none !important;
 }
 
+ /* Estilo del botón */
+    .leaflet-control-home {
+      background-color: white;
+      padding: 10px;
+      border: 2px solid #B3E35F;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .leaflet-control-home:hover {
+      background-color: #eee;
+    }
+
+
+    /* Botón de Brújula */
+#btn-brujula {
+    position: absolute;
+    top: 400px;          /* debajo del botón Casa, puedes ajustar */
+    left: 11px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #B3E35F;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 1002;
+    border: 2px solid #B3E35F;
+    box-shadow: 0 2px 5px #B3E35F;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+#btn-brujula:hover {
+    background: rgba(230, 230, 230, 0.9);
+}
+
+/* Imagen de la brújula */
+#brujula-img {
+    position: absolute;
+    top: 410px;
+    right: 10px;
+    width: 200px;           /* tamaño de la brújula */
+    opacity: 0.9;
+    z-index: 1000;
+    display: none;          /* empieza oculta */
+}
 
         </style>
     </head>
@@ -181,7 +227,7 @@
         <script src="data/Proyectos_9.js"></script>
         <script>
         var map = L.map('map', {
-            zoomControl:false, maxZoom:28, minZoom:1
+            zoomControl:false, maxZoom:24, minZoom:3
         }).fitBounds([[10.168702004403048,-84.4831308396618],[10.31090534816281,-84.26784931796668]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
@@ -237,7 +283,9 @@
         };
         abstract.addTo(map);
         */
+        
 
+        
         
         var zoomControl = L.control.zoom({
             position: 'topleft'
@@ -796,10 +844,10 @@ window.addEventListener('load', () => {
     // Aquí agregas tus créditos manuales personalizados
     const creditosManuales = `
         <strong>Desarrollado por:</strong> 
-<span class="autor">Alex Alberto Varela Quirós</span> | <span class="profesion">Geógrafo & Ingeniero Eléctrico</span><br>
+<span class="autor">Alex Alberto Varela Quirós</span> | <span class="profesion">Geógrafo y Ingeniero Eléctrico</span><br>
       <strong>Proyecto:</strong> Visor Geográfico para el Parque Nacional del Agua Juan Castro Blanco<br>
       <strong>Colaboración:</strong> Asociación Pro Desarrollo del Parque Nacional del Agua Juan Castro Blanco 
-  <span class="apajuca">APANAJUCA</span><br>
+  <img src="./images/apajanuca-logo.png" alt="Logo APNAJUCA" class="logo-credito"><br>
       <hr>
     `;
 
@@ -809,8 +857,47 @@ window.addEventListener('load', () => {
     lista.innerText = 'Mapa no encontrado.';
   }
 });
+
+
+// Coordenadas de “Casa” (cambia por tu área específica)
+var homeLatLng = [10.287052, -84.325047]; // ejemplo
+// Crear el botón
+var homeButton = L.DomUtil.create('div', 'leaflet-control-home fa fa-home');
+homeButton.title = "Ir a Casa";
+// Agregar evento de clic
+homeButton.onclick = function() {
+    map.setView(homeLatLng, 12); // ajusta zoom a tu preferencia
+}
+// Añadir al mapa como control personalizado
+L.Control.HomeButton = L.Control.extend({
+    onAdd: function(map) {
+        return homeButton;
+    },
+    onRemove: function(map) {
+        // nada
+    }
+});
+// Agregar el control al mapa
+new L.Control.HomeButton({ position: 'topleft' }).addTo(map);
 </script>
 
+<button id="btn-brujula">🧭</button>
+<img id="brujula-img" src="./images/brujula.png" alt="Brújula">
+
+<script>
+    // Botón para mostrar/ocultar brújula
+const btnBrujula = document.getElementById('btn-brujula');
+const brujulaImg = document.getElementById('brujula-img');
+
+btnBrujula.addEventListener('click', () => {
+    if (brujulaImg.style.display === 'none' || brujulaImg.style.display === '') {
+        brujulaImg.style.display = 'block';
+    } else {
+        brujulaImg.style.display = 'none';
+    }
+});
+
+</script>
 
     </body>
 </html>
