@@ -15,16 +15,146 @@
         <link rel="stylesheet" href="css/leaflet.photon.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
+            /* ====== CINTA SUPERIOR ====== */
+.titleRibbon {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(90deg, #6EA439 0%, #f7f7f7 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    color: rgb(8, 216, 253);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 1001; /* Más alto que Leaflet */
+    font-family: 'Lato', sans-serif;
+}
+.titleLogoRight {
+    height: 60px;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+/* ====== AJUSTAR EL MAPA ====== */
+#map {
+    position: absolute;
+    top: 10px; /* deja espacio para la cinta */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+/* ====== AJUSTAR LOS CONTROLES DE LEAFLET ====== */
+.leaflet-top {
+    top: 88px !important; /* baja los controles para que no los tape la barra */
+}
+
         html, body, #map {
             width: 100%;
             height: 100%;
             padding: 0;
             margin: 0;
         }
+        /* Botón de créditos */
+.creditos-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(168, 253, 134, 0.9); /* tono acorde a tu paleta */
+    color: rgb(8, 8, 8);
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Modal de créditos */
+.modal-creditos {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-contenido {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 700px;
+    color: #333;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease;
+}
+
+.cerrar-modal {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+}
+.cerrar-modal:hover {
+    color: #000;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.profesion {
+  color: #555;           /* gris neutro */
+  font-style: italic;    /* leve distinción */
+  font-weight: normal;   /* no resalta demasiado */
+  font-size: 0.95em;     /* un poco más pequeño */
+}
+
+
+.apajuca {
+  color: #34bd3f;  /* Verde natural */
+  font-weight: bold;
+}
+
+/* Oculta el fondo del control de atribución */
+.leaflet-control-attribution {
+    background: transparent !important; /* quita el fondo */
+    box-shadow: none !important;       /* quita sombra */
+    padding: 0 !important;             /* opcional, quita espacio extra */
+}
+
+/* Oculta solo los enlaces dentro */
+.leaflet-control-attribution a {
+    display: none !important;
+}
+
+.leaflet-bottom.leaflet-right {
+    display: none !important;
+}
+
+
         </style>
-        <title>Visor Geográfico PN del Agua Juan Castro Blanco</title>
     </head>
     <body>
+        <!-- Cinta superior -->
+        <div class="titleRibbon">
+<h2 class="project-title" style="color: #393b3b; font-weight: bold; font-style: italic; font-family: 'Open Sans', sans-serif; font-size: 28px;">
+    Visor Geográfico del Parque Nacional del Agua Juan Castro Blanco
+</h2>            <img src="./images/apajanuca-logo.png" alt="Logo APAJANUCA" class="titleLogoRight">
+        </div>
+
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -90,10 +220,7 @@
             this.update();
             return this._div;
         };
-        title.update = function () {
-            this._div.innerHTML = '<h2>Visor Geográfico PN del Agua Juan Castro Blanco</h2>';
-        };
-        title.addTo(map);
+        /*
         var abstract = new L.Control({'position':'topleft'});
         abstract.onAdd = function (map) {
             this._div = L.DomUtil.create('div',
@@ -109,6 +236,9 @@
                 this._div.innerHTML = 'Un mapa vivo del santuario de agua y naturaleza.';
         };
         abstract.addTo(map);
+        */
+
+        
         var zoomControl = L.control.zoom({
             position: 'topleft'
         }).addTo(map);
@@ -570,7 +700,7 @@
         search.classList.add("leaflet-control-search")
         search.style.display = "flex";
         search.style.backgroundColor="rgba(255,255,255,0.5)" 
-
+        /**/
         // Create the new button element
         var button = document.createElement("div");
         button.id = "gcd-button-control";
@@ -620,5 +750,67 @@
             document.getElementsByClassName('search-button')[1].className += ' fa fa-binoculars';
         }
         </script>
+        <!-- Botón de Créditos -->
+<!-- Botón de Créditos -->
+<div class="creditos-btn" onclick="abrirCreditos()">ℹ️ Créditos</div>
+
+<!-- Ventana Modal -->
+<div id="modalCreditos" class="modal-creditos">
+  <div class="modal-contenido">
+    <span class="cerrar-modal" onclick="cerrarCreditos()">&times;</span>
+    <h3>Créditos y Atribuciones</h3>
+    <div id="listaCreditos">Cargando...</div>
+  </div>
+</div>
+
+<script>
+// Mostrar/ocultar modal
+function abrirCreditos() {
+  document.getElementById("modalCreditos").style.display = "block";
+}
+function cerrarCreditos() {
+  document.getElementById("modalCreditos").style.display = "none";
+}
+
+// Cerrar si clic fuera del modal
+window.onclick = function(event) {
+  var modal = document.getElementById("modalCreditos");
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+// Capturar las atribuciones del mapa automáticamente y agregar las manuales
+window.addEventListener('load', () => {
+  const lista = document.getElementById('listaCreditos');
+  if (typeof map !== "undefined") {
+    const attributions = [];
+    for (let i in map._layers) {
+      const layer = map._layers[i];
+      if (layer.getAttribution && layer.getAttribution()) {
+        attributions.push(layer.getAttribution());
+      }
+    }
+    const unicos = [...new Set(attributions)];
+    
+    // Aquí agregas tus créditos manuales personalizados
+    const creditosManuales = `
+        <strong>Desarrollado por:</strong> 
+<span class="autor">Alex Alberto Varela Quirós</span> | <span class="profesion">Geógrafo & Ingeniero Eléctrico</span><br>
+      <strong>Proyecto:</strong> Visor Geográfico para el Parque Nacional del Agua Juan Castro Blanco<br>
+      <strong>Colaboración:</strong> Asociación Pro Desarrollo del Parque Nacional del Agua Juan Castro Blanco 
+  <span class="apajuca">APANAJUCA</span><br>
+      <hr>
+    `;
+
+    // Mostrar créditos manuales + automáticos
+    lista.innerHTML = creditosManuales + (unicos.join('<br>') || 'No hay atribuciones registradas.');
+  } else {
+    lista.innerText = 'Mapa no encontrado.';
+  }
+});
+</script>
+
+
     </body>
 </html>
