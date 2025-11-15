@@ -6537,35 +6537,36 @@ module.exports = {
 // English i18n translations
 
 module.exports = {
-  'measure': 'Measure',
-  'measureDistancesAndAreas': 'Medición de distancias y áreas',
-  'createNewMeasurement': 'Crear nueva medición',
-  'startCreating': 'Comience a crear una medición agregando puntos al mapa',
-  'finishMeasurement': 'Terminar medición',
-  'lastPoint': 'Uiltimo punto',
+  'measure': 'Medir',
+  'measureDistancesAndAreas': 'Medir distancias y áreas',
+  'createNewMeasurement': 'Crear una nueva medición',
+  'startCreating': 'Comience a crear una medición agregando puntos al mapa.',
+  'finishMeasurement': 'Finalizar medición',
+  'lastPoint': 'Último punto',
   'area': 'Área',
-  'perimeter': 'Perimetro',
-  'pointLocation': 'Point location',
-  'areaMeasurement': 'Area measurement',
-  'linearMeasurement': 'Linear measurement',
-  'pathDistance': 'Distancia de ruta',
+  'perimeter': 'Perímetro',
+  'pointLocation': 'Ubicación del punto',
+  'areaMeasurement': 'Medición de área',
+  'linearMeasurement': 'Medición lineal',
+  'pathDistance': 'Distancia del camino',
   'centerOnArea': 'Centrar en esta área',
   'centerOnLine': 'Centrar en esta línea',
-  'centerOnLocation': 'Centrar en esta localización',
+  'centerOnLocation': 'Centrar en esta ubicación',
   'cancel': 'Cancelar',
-  'delete': 'Borrar',
+  'delete': 'Eliminar',
   'acres': 'Acres',
   'feet': 'Pies',
-  'kilometers': 'Kilometros',
-  'hectares': 'Hectarias',
+  'kilometers': 'Kilómetros',
+  'hectares': 'Hectáreas',
   'meters': 'Metros',
   'miles': 'Millas',
-  'sqfeet': 'Sq Feet',
-  'sqmeters': 'Sq Meters',
-  'sqmiles': 'Sq Miles',
-  'decPoint': '.',
-  'thousandsSep': ','
+  'sqfeet': 'Pies²',
+  'sqmeters': 'Metros²',
+  'sqmiles': 'Millas²',
+  'decPoint': ',',
+  'thousandsSep': '.'
 };
+
 
 },{}],31:[function(require,module,exports){
 // en_UK.js
@@ -6573,8 +6574,8 @@ module.exports = {
 
 module.exports = {
   'measure': 'Measure',
-  'measureDistancesAndAreas': 'Measure distances and areas',
-  'createNewMeasurement': 'Create a new measurement',
+  'measureDistancesAndAreas': 'Medir distancias y áreas',
+  'createNewMeasurement': 'Crear una nueva medida',
   'startCreating': 'Start creating a measurement by adding points to the map',
   'finishMeasurement': 'Finish measurement',
   'lastPoint': 'Last point',
